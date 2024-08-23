@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Editing Person</title>
+</head>
+<body>
+<form th:action="@{/people/{id}(id = ${person.getId()})}" th:object="${person}" th:method="PATCH">
+    <label for="name">Введите имя: </label>
+    <input type="text" th:field="*{name}" id="name">
+    <div style="color: red" th:if="${#fields.hasErrors('name')}" th:errors="*{name}">Some error</div>
+    <br>
+    <label for="year">Введите год рождения: </label>
+    <input type="text" th:field="*{yearOfBirthday}" id="year">
+    <div style="color: red" th:if="${#fields.hasErrors('yearOfBirthday')}" th:errors="*{yearOfBirthday}">Some error</div>
+    <br>
+    <input type="submit" value="Редактировать!">
+</form>
+</body>
+</html>
