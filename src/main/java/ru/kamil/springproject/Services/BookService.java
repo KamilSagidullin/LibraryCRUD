@@ -6,6 +6,7 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import ru.kamil.springproject.Models.Book;
+import ru.kamil.springproject.Models.Person;
 import ru.kamil.springproject.Repositories.BookRepository;
 
 
@@ -57,6 +58,14 @@ public class BookService {
     public List<Book> pagination(int page,int itemsPerPage,boolean sortByYear){
         if (sortByYear) return bookRepository.findAll(PageRequest.of(page,itemsPerPage, Sort.by("yearOfProduction"))).getContent();
         else return bookRepository.findAll(PageRequest.of(page,itemsPerPage)).getContent();
+    }
+    @Transactional
+    public List<Book> findByFirstLetters(String firstLetters){
+        return bookRepository.findByNameStartingWith(firstLetters);
+    }
+    @Transactional
+    public List<Book> findBooksByPerson(Person person){
+        return bookRepository.findByPerson(person);
     }
 
 }

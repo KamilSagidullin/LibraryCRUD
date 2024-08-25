@@ -10,7 +10,6 @@ import ru.kamil.springproject.Models.Book;
 import ru.kamil.springproject.Models.Person;
 import ru.kamil.springproject.Services.BookService;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Component

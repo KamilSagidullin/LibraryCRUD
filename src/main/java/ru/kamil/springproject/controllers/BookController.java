@@ -13,6 +13,8 @@ import ru.kamil.springproject.Services.BookService;
 import ru.kamil.springproject.Services.PeopleService;
 import ru.kamil.springproject.util.BookValidator;
 
+import java.util.List;
+
 @Controller
 @RequestMapping("/books")
 
@@ -38,8 +40,8 @@ public class BookController {
         if (page == null) page = 0;
         if (booksPerPage == null) booksPerPage = bookService.getBooks().size();
         if (sortByYear == null) sortByYear = false;
-
-        model.addAttribute("books", bookService.pagination(page, booksPerPage,sortByYear));
+        if (!bookService.getBooks().isEmpty())
+            model.addAttribute("books", bookService.pagination(page, booksPerPage,sortByYear));
         return "/BookViews/bookIndex";
     }
 
@@ -97,6 +99,16 @@ public class BookController {
     public String freeBook(@PathVariable("id") int id) {
         bookDAO.free(id);
         return "redirect:/books/{id}";
+    }
+    @GetMapping("/search")
+    public String searchBook(){
+        return "/BookViews/searchBook";
+    }
+    @PostMapping("/search")
+    public String searchingBook(@RequestParam("firstLetters") String firstLetters,Model model){
+        List<Book> foundBooks = bookService.findByFirstLetters(firstLetters);
+        model.addAttribute("foundBooks", foundBooks);
+        return "/BookViews/searchBook";
     }
 
 }

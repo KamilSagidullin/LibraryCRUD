@@ -8,6 +8,7 @@ import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import ru.kamil.springproject.DAO.PersonDAO;
 import ru.kamil.springproject.Models.Person;
+import ru.kamil.springproject.Services.BookService;
 import ru.kamil.springproject.Services.PeopleService;
 import ru.kamil.springproject.util.PersonValidator;
 
@@ -15,14 +16,16 @@ import ru.kamil.springproject.util.PersonValidator;
 @RequestMapping("/people")
 public class PersonController {
     private final PeopleService peopleService;
+    private final BookService bookService;
     private final PersonDAO personDAO;
 
     private final PersonValidator personValidator;
 
 
     @Autowired
-    public PersonController(PeopleService peopleService, PersonDAO personDAO, PersonValidator personValidator) {
+    public PersonController(PeopleService peopleService, BookService bookService, PersonDAO personDAO, PersonValidator personValidator) {
         this.peopleService = peopleService;
+        this.bookService = bookService;
         this.personDAO = personDAO;
         this.personValidator = personValidator;
     }
@@ -52,7 +55,7 @@ public class PersonController {
     @GetMapping("/{id}")
     public String showPerson(@PathVariable("id") int id, Model model) {
         model.addAttribute("person", peopleService.getPerson(id));
-        model.addAttribute("books", personDAO.getBooksByPersonId(id));
+        model.addAttribute("books", bookService.findBooksByPerson(peopleService.getPerson(id)));
         return "/PersonViews/currentPerson";
     }
 
@@ -64,7 +67,6 @@ public class PersonController {
 
     @PatchMapping("/{id}")
     public String updatingPerson(@ModelAttribute("person") @Valid Person person, BindingResult bindingResult) {
-        personValidator.validate(person, bindingResult);
         if (bindingResult.hasErrors()) {
             return "PersonViews/editingPerson";
         }
