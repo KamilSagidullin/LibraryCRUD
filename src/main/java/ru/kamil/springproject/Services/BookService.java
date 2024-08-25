@@ -10,15 +10,18 @@ import ru.kamil.springproject.Models.Person;
 import ru.kamil.springproject.Repositories.BookRepository;
 
 
+import java.util.Date;
 import java.util.List;
 
 @Service
 public class BookService {
     private final BookRepository bookRepository;
+    private final PeopleService peopleService;
 
     @Autowired
-    public BookService(BookRepository bookRepository) {
+    public BookService(BookRepository bookRepository, PeopleService peopleService) {
         this.bookRepository = bookRepository;
+        this.peopleService = peopleService;
     }
 
 
@@ -65,6 +68,7 @@ public class BookService {
     }
     @Transactional
     public List<Book> findBooksByPerson(Person person){
+        peopleService.setOverdue(person);
         return bookRepository.findByPerson(person);
     }
 

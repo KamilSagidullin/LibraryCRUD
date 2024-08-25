@@ -13,6 +13,8 @@ import ru.kamil.springproject.Services.BookService;
 import ru.kamil.springproject.Services.PeopleService;
 import ru.kamil.springproject.util.BookValidator;
 
+import java.time.LocalDateTime;
+import java.util.Date;
 import java.util.List;
 
 @Controller
@@ -37,6 +39,8 @@ public class BookController {
     public String helloPage(@RequestParam(required = false, value = "page") Integer page,
                             @RequestParam(required = false, value = "books_per_page") Integer booksPerPage,
                             @RequestParam(required = false, value = "sort_by_year") Boolean sortByYear, Model model) {
+        LocalDateTime currentDate = LocalDateTime.now();
+        System.out.println(currentDate);
         if (page == null) page = 0;
         if (booksPerPage == null) booksPerPage = bookService.getBooks().size();
         if (sortByYear == null) sortByYear = false;

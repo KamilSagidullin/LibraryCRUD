@@ -29,7 +29,7 @@ public class PersonController {
         this.personDAO = personDAO;
         this.personValidator = personValidator;
     }
-    
+
 
     @GetMapping()
     public String helloPage(Model model) {
@@ -70,7 +70,7 @@ public class PersonController {
         if (bindingResult.hasErrors()) {
             return "PersonViews/editingPerson";
         }
-        peopleService.update(person.getId(),person);
+        peopleService.update(person.getId(), person);
         return "redirect:/people";
     }
 

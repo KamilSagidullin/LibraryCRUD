@@ -6,6 +6,8 @@ import jakarta.validation.constraints.Min;
 import jakarta.validation.constraints.NotEmpty;
 import jakarta.validation.constraints.Size;
 
+import java.util.Date;
+
 @Entity
 @Table(name="book")
 public class Book {
@@ -27,6 +29,13 @@ public class Book {
     @ManyToOne()
     @JoinColumn(name = "person_id",referencedColumnName = "id")
     private Person person;
+
+    @Column(name = "managed_at")
+    @Temporal(TemporalType.TIMESTAMP)
+    private Date managedAt;
+
+    @Transient
+    private boolean overdue;
 
     public Book() {
 
@@ -82,5 +91,21 @@ public class Book {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Date getManagedAt() {
+        return managedAt;
+    }
+
+    public void setManagedAt(Date managedAt) {
+        this.managedAt = managedAt;
+    }
+
+    public boolean isOverdue() {
+        return overdue;
+    }
+
+    public void setOverdue(boolean overdue) {
+        this.overdue = overdue;
     }
 }

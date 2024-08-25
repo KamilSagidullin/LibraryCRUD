@@ -10,6 +10,7 @@ import ru.kamil.springproject.Models.Book;
 import ru.kamil.springproject.Models.Person;
 import ru.kamil.springproject.Services.BookService;
 
+import java.util.Date;
 import java.util.List;
 
 @Component
@@ -40,6 +41,7 @@ public class BookDAO {
     public void setBook(int id, Person person){
         Session session = entityManager.unwrap(Session.class);
         Book book = bookService.getBook(id);
+        book.setManagedAt(new Date());
         book.setPerson(person);
 
     }
@@ -48,4 +50,6 @@ public class BookDAO {
         Book book = bookService.getBook(id);
         book.setPerson(null);
     }
+
+
 }

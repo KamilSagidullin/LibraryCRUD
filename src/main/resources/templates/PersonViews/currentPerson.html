@@ -11,7 +11,7 @@
     Человек пока не взял ни одной книги
 </div>
 <div th:unless="${books.isEmpty()}" th:each="book: ${books}">
-    <p th:text="${book.name} + ', '+ ${book.author} + ', '+${book.yearOfProduction}"></p>
+    <p th:style="${book.overdue ? 'color: red;' : ''}" th:text="${book.name} + ', '+ ${book.author} + ', '+${book.yearOfProduction}"></p>
 </div>
 <br>
 <hr>
